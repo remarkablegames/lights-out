@@ -1,12 +1,10 @@
-# phaser-rpg
+# animal-power-tycoon
 
-<kbd>phaser-rpg</kbd> is a template for making [Phaser](https://phaser.io/) RPG games.
-
-Inspired by [`phaser-3-tilemap-blog-posts`](https://github.com/mikewesthad/phaser-3-tilemap-blog-posts/tree/master/examples/post-1) (see [Medium story](https://medium.com/@michaelwesthadley/958fc7e6bbd6)).
+<kbd>animal-power-tycoon</kbd> is a 2D simulator game.
 
 Demo:
 
-- [remarkablegames](https://remarkablegames.org/phaser-rpg)
+- [remarkablegames](https://remarkablegames.org/animal-power-tycoon)
 
 Stack:
 
@@ -23,8 +21,8 @@ Stack:
 Clone the repository:
 
 ```sh
-git clone https://github.com/remarkablegames/phaser-rpg.git
-cd phaser-rpg
+git clone https://github.com/remarkablegames/animal-power-tycoon.git
+cd animal-power-tycoon
 ```
 
 Install the dependencies:

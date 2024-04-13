@@ -1,7 +1,7 @@
 {
-  "name": "phaser-rpg",
+  "name": "animal-power-tycoon",
   "version": "1.0.0-alpha",
-  "description": "A template for building Phaser RPG games.",
+  "description": "A template for building Animal Power Tycoon games.",
   "author": "Mark <mark@remarkablemark.org>",
   "scripts": {
     "build": "npm run clean && vite build",
@@ -14,7 +14,7 @@
     "preview": "vite preview",
     "start": "vite --open"
   },
-  "homepage": "https://remarkablegames.org/phaser-rpg/",
+  "homepage": "https://remarkablegames.org/animal-power-tycoon/",
   "dependencies": {
     "phaser": "3.80.1",
     "phaser-jsx": "0.9.1"
