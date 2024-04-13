@@ -23,11 +23,6 @@ const directions = [
   Direction.Down,
 ];
 
-type Cursors = Record<
-  'w' | 'a' | 's' | 'd' | 'up' | 'left' | 'down' | 'right' | 'space',
-  Phaser.Input.Keyboard.Key
->;
-
 const Velocity = {
   Horizontal: 175,
   Vertical: 175,
@@ -35,7 +30,6 @@ const Velocity = {
 
 export class Cat extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
-  cursors: Cursors;
   selector: Phaser.Physics.Arcade.StaticBody;
 
   constructor(
@@ -60,23 +54,11 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     // Collide the sprite body with the world boundary
     this.setCollideWorldBounds(true);
 
-    // Add cursor keys
-    this.cursors = this.createCursorKeys();
-
     // Create sprite animations
     this.createAnimations();
 
     // Add selector
     this.selector = scene.physics.add.staticBody(x - 8, y + 32, 16, 16);
-  }
-
-  /**
-   * Track the arrow keys & WASD.
-   */
-  private createCursorKeys() {
-    return this.scene.input.keyboard!.addKeys(
-      'w,a,s,d,up,left,down,right,space',
-    ) as Cursors;
   }
 
   private createAnimations() {
@@ -144,7 +126,7 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    const { anims, body, cursors, selector } = this;
+    const { anims, body, selector } = this;
     const prevVelocity = body.velocity.clone();
 
     // Stop any previous movement from the last frame
@@ -185,46 +167,22 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     // Normalize and scale the velocity so that player can't move faster along a diagonal
     body.velocity.normalize().scale(Velocity.Horizontal);
 
-    // Update the animation last and give left/right animations precedence over up/down animations
+    anims.stop();
+
+    // If we were moving, pick an idle frame to use
     switch (true) {
-      case cursors.left.isDown:
-      case cursors.a.isDown:
-        anims.play(Animation.Left, true);
+      case prevVelocity.x < 0:
+        this.setTexture(key.atlas.player, 'misa-left');
         break;
-
-      case cursors.right.isDown:
-      case cursors.d.isDown:
-        anims.play(Animation.Right, true);
+      case prevVelocity.x > 0:
+        this.setTexture(key.atlas.player, 'misa-right');
         break;
-
-      case cursors.up.isDown:
-      case cursors.w.isDown:
-        anims.play(Animation.Up, true);
+      case prevVelocity.y < 0:
+        this.setTexture(key.atlas.player, 'misa-back');
         break;
-
-      case cursors.down.isDown:
-      case cursors.s.isDown:
-        anims.play(Animation.Down, true);
+      case prevVelocity.y > 0:
+        this.setTexture(key.atlas.player, 'misa-front');
         break;
-
-      default:
-        anims.stop();
-
-        // If we were moving, pick an idle frame to use
-        switch (true) {
-          case prevVelocity.x < 0:
-            this.setTexture(key.atlas.player, 'misa-left');
-            break;
-          case prevVelocity.x > 0:
-            this.setTexture(key.atlas.player, 'misa-right');
-            break;
-          case prevVelocity.y < 0:
-            this.setTexture(key.atlas.player, 'misa-back');
-            break;
-          case prevVelocity.y > 0:
-            this.setTexture(key.atlas.player, 'misa-front');
-            break;
-        }
     }
   }
 }
