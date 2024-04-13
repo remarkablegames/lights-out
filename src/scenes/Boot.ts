@@ -18,7 +18,12 @@ export class Boot extends Scene {
       key.tilemap.tuxemon,
       assets.tilemaps.tuxemonTilemap,
     );
-    this.load.atlas(key.atlas.player, assets.atlas.image, assets.atlas.data);
+    this.load.atlas(
+      key.atlas.player,
+      assets.atlas.playerImage,
+      assets.atlas.playerData,
+    );
+    this.load.atlas(key.atlas.cat, assets.atlas.catImage, assets.atlas.catData);
   }
 
   create() {
