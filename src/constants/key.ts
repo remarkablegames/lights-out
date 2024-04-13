@@ -1,5 +1,6 @@
 const atlas = {
   player: 'player',
+  cat: 'cat',
 } as const;
 
 const image = {

@@ -11,6 +11,7 @@ import {
 } from '../constants';
 import { TileMarker } from '../graphics';
 import { Player } from '../sprites';
+import { Cat } from '../sprites';
 import { state } from '../state';
 
 interface Sign extends Phaser.Physics.Arcade.StaticBody {
@@ -21,6 +22,7 @@ export class Main extends Phaser.Scene {
   private player!: Player;
   private sign!: Sign;
   private tileMarker!: TileMarker;
+  private cat!: Cat;
 
   constructor() {
     super(key.scene.main);
@@ -72,6 +74,12 @@ export class Main extends Phaser.Scene {
     render(<TilemapDebug tilemapLayer={worldLayer} />, this);
 
     this.tileMarker = new TileMarker(this, map, worldLayer!);
+    this.cat = new Cat(
+      this,
+      Phaser.Math.RND.between(0, worldLayer.width - 1),
+      Phaser.Math.RND.between(0, worldLayer.height - 1),
+    );
+    this.physics.add.collider(this.cat, worldLayer);
 
     state.isTypewriting = true;
     render(
@@ -116,5 +124,6 @@ export class Main extends Phaser.Scene {
   update() {
     this.player.update();
     this.tileMarker.update();
+    this.cat.update();
   }
 }
