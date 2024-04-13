@@ -1,12 +1,16 @@
 # Animal Power Tycoon
 
-<kbd>Animal Power Tycoon</kbd> is a 2D simulator game.
+🐹 Animal Power Tycoon is a 2D simulator game.
 
-This game was made for the [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024), in which the theme was `power`. The game was generated from [phaser-rpg](https://github.com/remarkablegames/phaser-rpg).
+This game was made for the [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024), in which the theme was `power`.
 
 Play the game on:
 
 - [remarkablegames](https://remarkablegames.org/animal-power-tycoon)
+
+## Ideation
+
+- [Excalidraw](https://excalidraw.com/#json=ATrraBVgqlk5WyFF-Ns1F,ii5EYJOkroWOEIlHMIdsFw)
 
 ## Prerequisites
 
