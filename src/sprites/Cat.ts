@@ -16,12 +16,7 @@ enum Direction {
   Down = 'Down',
 }
 
-const directions = [
-  Direction.Left,
-  Direction.Right,
-  Direction.Up,
-  Direction.Down,
-];
+const directions = Object.values(Direction);
 
 const Velocity = {
   Horizontal: 175,
@@ -30,7 +25,6 @@ const Velocity = {
 
 export class Cat extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
-  selector: Phaser.Physics.Arcade.StaticBody;
 
   constructor(
     scene: Phaser.Scene,
@@ -41,24 +35,16 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
   ) {
     super(scene, x, y, texture, frame);
 
-    // Add the sprite to the scene
     scene.add.existing(this);
-
-    // Enable physics for the sprite
     scene.physics.world.enable(this);
 
     // The image has a bit of whitespace so use setSize and
     // setOffset to control the size of the player's body
     this.setSize(32, 42).setOffset(0, 22);
 
-    // Collide the sprite body with the world boundary
     this.setCollideWorldBounds(true);
 
-    // Create sprite animations
     this.createAnimations();
-
-    // Add selector
-    this.selector = scene.physics.add.staticBody(x - 8, y + 32, 16, 16);
   }
 
   private createAnimations() {
@@ -125,27 +111,27 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  private getDirection() {
+    return Phaser.Utils.Array.GetRandom(directions);
+  }
+
   update() {
-    const { anims, body, selector } = this;
+    const { anims, body } = this;
     const prevVelocity = body.velocity.clone();
 
     // Stop any previous movement from the last frame
     body.setVelocity(0);
 
-    const direction = Phaser.Utils.Array.GetRandom(directions);
+    const direction = this.getDirection();
 
     // Horizontal movement
     switch (true) {
       case direction === Direction.Left:
         body.setVelocityX(-Velocity.Horizontal);
-        selector.x = body.x - 19;
-        selector.y = body.y + 14;
         break;
 
       case direction === Direction.Right:
         body.setVelocityX(Velocity.Horizontal);
-        selector.x = body.x + 35;
-        selector.y = body.y + 14;
         break;
     }
 
@@ -153,14 +139,10 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     switch (true) {
       case direction === Direction.Down:
         body.setVelocityY(-Velocity.Vertical);
-        selector.x = body.x + 8;
-        selector.y = body.y - 18;
         break;
 
       case direction === Direction.Up:
         body.setVelocityY(Velocity.Vertical);
-        selector.x = body.x + 8;
-        selector.y = body.y + 46;
         break;
     }
 
