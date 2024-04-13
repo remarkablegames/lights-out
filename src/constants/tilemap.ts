@@ -11,3 +11,7 @@ export enum TilemapObject {
   SpawnPoint = 'Spawn Point',
   Sign = 'Sign',
 }
+
+export enum TilemapTile {
+  Rock = 225,
+}

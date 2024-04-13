@@ -20,7 +20,7 @@ interface Sign extends Phaser.Physics.Arcade.StaticBody {
 export class Main extends Phaser.Scene {
   private player!: Player;
   private sign!: Sign;
-  private tileMarker!: Phaser.GameObjects.Graphics;
+  private tileMarker!: TileMarker;
 
   constructor() {
     super(key.scene.main);

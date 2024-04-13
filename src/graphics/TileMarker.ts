@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
 
+import { TilemapTile } from '../constants';
+
 export class TileMarker extends Phaser.GameObjects.Graphics {
   private map!: Phaser.Tilemaps.Tilemap;
   private worldLayer!: Phaser.Tilemaps.TilemapLayer;
@@ -39,7 +41,7 @@ export class TileMarker extends Phaser.GameObjects.Graphics {
     if (activePointer.leftButtonDown()) {
       try {
         this.worldLayer
-          .putTileAtWorldXY(225, worldPoint.x, worldPoint.y)
+          .putTileAtWorldXY(TilemapTile.Rock, worldPoint.x, worldPoint.y)
           .setCollision(true);
       } catch (error) {
         // don't draw tile if outside of game world
