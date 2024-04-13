@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 
 import { key } from '../constants';
+import PowerLine from './PowerLine';
 
 enum Animation {
   Left = 'Left',
@@ -22,6 +23,7 @@ const Velocity = {
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
   cursors: Cursors;
+  pointers: Phaser.Input.Pointer[];
   selector: Phaser.Physics.Arcade.StaticBody;
 
   constructor(
@@ -52,6 +54,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Add cursor keys
     this.cursors = this.createCursorKeys();
+
+    this.scene.input.on('pointerdown', (pointer) => {
+      const powerLine = new PowerLine(this.scene, pointer.x, pointer.y);
+      this.scene.add.existing(powerLine);
+    });
 
     // Create sprite animations
     this.createAnimations();
@@ -134,7 +141,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   }
 
   update() {
-    const { anims, body, cursors, selector } = this;
+    const { anims, body, cursors, pointers, selector } = this;
     const prevVelocity = body.velocity.clone();
 
     // Stop any previous movement from the last frame
@@ -217,6 +224,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setTexture(key.atlas.player, 'misa-front');
             break;
         }
+    }
+
+    // Space to create a powerline.
+    if (cursors.space.isDown) {
     }
   }
 }

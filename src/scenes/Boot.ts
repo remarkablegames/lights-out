@@ -14,6 +14,8 @@ export class Boot extends Scene {
       frameHeight: 16,
     });
     this.load.image(key.image.tuxemon, assets.tilemaps.tuxemonTileset);
+    this.load.image(key.image.urban, assets.tilemaps.urbanTilemap);
+
     this.load.tilemapTiledJSON(
       key.tilemap.tuxemon,
       assets.tilemaps.tuxemonTilemap,

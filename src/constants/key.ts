@@ -5,6 +5,7 @@ const atlas = {
 const image = {
   spaceman: 'spaceman',
   tuxemon: 'tuxemon',
+  urban: 'urban',
 } as const;
 
 const scene = {
