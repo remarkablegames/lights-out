@@ -378,11 +378,11 @@
         "orientation": "orthogonal",
         "width": 16
       },
-      "image": "../tilesets/tuxemon-sample-32px-extruded.png",
+      "image": "tuxemon-town-32px-extruded.png",
       "imageheight": 1020,
       "imagewidth": 816,
       "margin": 1,
-      "name": "tuxemon-sample-32px-extruded",
+      "name": "tuxemon-town-32px-extruded",
       "spacing": 2,
       "tilecount": 720,
       "tileheight": 32,

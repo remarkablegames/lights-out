@@ -6,9 +6,9 @@
  <properties>
   <property name="edges" value="clamped"/>
  </properties>
- <tileset firstgid="1" name="tuxemon-sample-32px-extruded" tilewidth="32" tileheight="32" spacing="2" margin="1" tilecount="720" columns="24">
+ <tileset firstgid="1" name="tuxemon-town-32px-extruded" tilewidth="32" tileheight="32" spacing="2" margin="1" tilecount="720" columns="24">
   <grid orientation="orthogonal" width="16" height="16"/>
-  <image source="../tilesets/tuxemon-sample-32px-extruded.png" width="816" height="1020"/>
+  <image source="tuxemon-town-32px-extruded.png" width="816" height="1020"/>
   <tile id="0">
    <properties>
     <property name="collides" type="bool" value="false"/>
