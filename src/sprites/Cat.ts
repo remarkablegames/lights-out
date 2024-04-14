@@ -19,8 +19,8 @@ enum Direction {
 const directions = Object.values(Direction);
 
 const Velocity = {
-  Horizontal: 175,
-  Vertical: 175,
+  Horizontal: 150,
+  Vertical: 150,
 } as const;
 
 export class Cat extends Phaser.Physics.Arcade.Sprite {
@@ -45,7 +45,7 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     this.setSize(32, 42).setOffset(0, 22);
 
     this.setCollideWorldBounds(true);
-
+    this.setTint(0xff0000);
     this.createAnimations();
   }
 
