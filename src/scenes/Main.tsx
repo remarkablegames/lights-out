@@ -10,8 +10,7 @@ import {
   TILESET_NAME,
 } from '../constants';
 import { TileMarker } from '../graphics';
-import { Player } from '../sprites';
-import { Spaceman } from '../sprites';
+import { Player, Spaceman } from '../sprites';
 import { state } from '../state';
 
 interface Sign extends Phaser.Physics.Arcade.StaticBody {
@@ -21,20 +20,25 @@ interface Sign extends Phaser.Physics.Arcade.StaticBody {
 export class Main extends Phaser.Scene {
   private player!: Player;
   private sign!: Sign;
-  private tileMarker!: TileMarker;
   private spacemanGroup!: Phaser.GameObjects.Group;
+  private tileMarker!: TileMarker;
+  private tilemap!: Phaser.Tilemaps.Tilemap;
+  private worldLayer!: Phaser.Tilemaps.TilemapLayer;
 
   constructor() {
     super(key.scene.main);
   }
 
   create() {
-    const tilemap = this.make.tilemap({ key: key.tilemap.tuxemon });
-    const tileset = tilemap.addTilesetImage(TILESET_NAME, key.image.tuxemon)!;
+    this.tilemap = this.make.tilemap({ key: key.tilemap.tuxemon });
+    const tileset = this.tilemap.addTilesetImage(
+      TILESET_NAME,
+      key.image.tuxemon,
+    )!;
 
-    tilemap.createLayer(TilemapLayer.BelowPlayer, tileset);
-    const worldLayer = tilemap.createLayer(TilemapLayer.World, tileset)!;
-    const aboveLayer = tilemap.createLayer(
+    this.tilemap.createLayer(TilemapLayer.BelowPlayer, tileset);
+    const worldLayer = this.tilemap.createLayer(TilemapLayer.World, tileset)!;
+    const aboveLayer = this.tilemap.createLayer(
       TilemapLayer.AbovePlayer,
       tileset,
       0,
@@ -47,12 +51,12 @@ export class Main extends Phaser.Scene {
 
     aboveLayer.setDepth(Depth.AbovePlayer);
 
-    const spawnPoint = tilemap.findObject(
+    const spawnPoint = this.tilemap.findObject(
       TilemapLayer.Objects,
       ({ name }) => name === TilemapObject.SpawnPoint,
     )!;
 
-    const sign = tilemap.findObject(
+    const sign = this.tilemap.findObject(
       TilemapLayer.Objects,
       ({ name }) => name === TilemapObject.Sign,
     )!;
@@ -72,13 +76,13 @@ export class Main extends Phaser.Scene {
     this.cameras.main.setBounds(
       0,
       0,
-      tilemap.widthInPixels,
-      tilemap.heightInPixels,
+      this.tilemap.widthInPixels,
+      this.tilemap.heightInPixels,
     );
 
     render(<TilemapDebug tilemapLayer={worldLayer} />, this);
 
-    this.tileMarker = new TileMarker(this, tilemap, worldLayer!);
+    this.tileMarker = new TileMarker(this, this.tilemap, worldLayer!);
 
     this.addSpaceman(worldLayer);
 
