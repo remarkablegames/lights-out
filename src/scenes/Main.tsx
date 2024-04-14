@@ -51,28 +51,6 @@ export class Main extends Phaser.Scene {
 
     aboveLayer.setDepth(Depth.AbovePlayer);
 
-    const spawnPoint = this.tilemap.findObject(
-      TilemapLayer.Objects,
-      ({ name }) => name === TilemapObject.SpawnPoint,
-    )!;
-
-    const sign = this.tilemap.findObject(
-      TilemapLayer.Objects,
-      ({ name }) => name === TilemapObject.Sign,
-    )!;
-
-    this.sign = this.physics.add.staticBody(
-      sign.x!,
-      sign.y!,
-      sign.width,
-      sign.height,
-    );
-    this.sign.text = sign.properties[0].value;
-
-    this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
-    this.addPlayerSignInteraction();
-    this.physics.add.collider(this.player, this.worldLayer);
-
     this.cameras.main.setBounds(
       0,
       0,
@@ -84,6 +62,7 @@ export class Main extends Phaser.Scene {
 
     this.tileMarker = new TileMarker(this, this.tilemap, this.worldLayer);
 
+    this.addPlayer();
     this.addSpaceman();
 
     state.isTypewriting = true;
@@ -99,6 +78,18 @@ export class Main extends Phaser.Scene {
       this.scene.pause(key.scene.main);
       this.scene.launch(key.scene.menu);
     });
+  }
+
+  private addPlayer() {
+    const spawnPoint = this.tilemap.findObject(
+      TilemapLayer.Objects,
+      ({ name }) => name === TilemapObject.SpawnPoint,
+    )!;
+
+    this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
+    this.physics.add.collider(this.player, this.worldLayer);
+
+    this.addPlayerSignInteraction();
   }
 
   private addSpaceman() {
@@ -120,6 +111,19 @@ export class Main extends Phaser.Scene {
   }
 
   private addPlayerSignInteraction() {
+    const sign = this.tilemap.findObject(
+      TilemapLayer.Objects,
+      ({ name }) => name === TilemapObject.Sign,
+    )!;
+
+    this.sign = this.physics.add.staticBody(
+      sign.x!,
+      sign.y!,
+      sign.width,
+      sign.height,
+    );
+    this.sign.text = sign.properties[0].value;
+
     type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 
     this.physics.add.overlap(
@@ -138,7 +142,6 @@ export class Main extends Phaser.Scene {
           );
         }
       },
-
       undefined,
       this,
     );
