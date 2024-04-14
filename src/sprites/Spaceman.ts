@@ -3,11 +3,10 @@ import Phaser from 'phaser';
 import { Direction, key } from '../constants';
 
 enum Animation {
-  Left = 'SpacemanLeft',
-  Right = 'SpacemanRight',
-  Up = 'SpacemanUp',
-  Down = 'SpacemanDown',
-  Turn = 'SpacemanTurn',
+  Left = 'spaceman_left',
+  Right = 'spaceman_right',
+  Up = 'spaceman_up',
+  Down = 'spaceman_down',
 }
 
 const Velocity = {
