@@ -29,12 +29,12 @@ export class Main extends Phaser.Scene {
   }
 
   create() {
-    const map = this.make.tilemap({ key: key.tilemap.tuxemon });
-    const tileset = map.addTilesetImage(TILESET_NAME, key.image.tuxemon)!;
+    const tilemap = this.make.tilemap({ key: key.tilemap.tuxemon });
+    const tileset = tilemap.addTilesetImage(TILESET_NAME, key.image.tuxemon)!;
 
-    map.createLayer(TilemapLayer.BelowPlayer, tileset);
-    const worldLayer = map.createLayer(TilemapLayer.World, tileset)!;
-    const aboveLayer = map.createLayer(
+    tilemap.createLayer(TilemapLayer.BelowPlayer, tileset);
+    const worldLayer = tilemap.createLayer(TilemapLayer.World, tileset)!;
+    const aboveLayer = tilemap.createLayer(
       TilemapLayer.AbovePlayer,
       tileset,
       0,
@@ -47,12 +47,12 @@ export class Main extends Phaser.Scene {
 
     aboveLayer.setDepth(Depth.AbovePlayer);
 
-    const spawnPoint = map.findObject(
+    const spawnPoint = tilemap.findObject(
       TilemapLayer.Objects,
       ({ name }) => name === TilemapObject.SpawnPoint,
     )!;
 
-    const sign = map.findObject(
+    const sign = tilemap.findObject(
       TilemapLayer.Objects,
       ({ name }) => name === TilemapObject.Sign,
     )!;
@@ -66,28 +66,21 @@ export class Main extends Phaser.Scene {
     this.sign.text = sign.properties[0].value;
 
     this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
-    this.enablePlayerSignInteraction();
+    this.addPlayerSignInteraction();
     this.physics.add.collider(this.player, worldLayer);
 
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.setBounds(
+      0,
+      0,
+      tilemap.widthInPixels,
+      tilemap.heightInPixels,
+    );
 
     render(<TilemapDebug tilemapLayer={worldLayer} />, this);
 
-    this.tileMarker = new TileMarker(this, map, worldLayer!);
+    this.tileMarker = new TileMarker(this, tilemap, worldLayer!);
 
-    this.spacemanGroup = this.add.group();
-    Array.from(Array(10).keys()).forEach(() => {
-      this.spacemanGroup.add(
-        new Spaceman(
-          this,
-          Phaser.Math.RND.between(0, worldLayer.width - 1),
-          Phaser.Math.RND.between(0, worldLayer.height - 1),
-        ),
-      );
-    });
-    this.physics.add.collider(this.spacemanGroup, worldLayer);
-    this.physics.add.collider(this.spacemanGroup, this.player);
-    this.physics.add.collider(this.spacemanGroup, this.spacemanGroup);
+    this.addSpaceman(worldLayer);
 
     state.isTypewriting = true;
     render(
@@ -104,7 +97,25 @@ export class Main extends Phaser.Scene {
     });
   }
 
-  private enablePlayerSignInteraction() {
+  private addSpaceman(worldLayer: Phaser.Tilemaps.TilemapLayer) {
+    this.spacemanGroup = this.add.group();
+
+    Array.from(Array(10).keys()).forEach(() => {
+      this.spacemanGroup.add(
+        new Spaceman(
+          this,
+          Phaser.Math.RND.between(0, worldLayer.width - 1),
+          Phaser.Math.RND.between(0, worldLayer.height - 1),
+        ),
+      );
+    });
+
+    this.physics.add.collider(this.spacemanGroup, worldLayer);
+    this.physics.add.collider(this.spacemanGroup, this.player);
+    this.physics.add.collider(this.spacemanGroup, this.spacemanGroup);
+  }
+
+  private addPlayerSignInteraction() {
     type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 
     this.physics.add.overlap(
