@@ -3,10 +3,10 @@ import Phaser from 'phaser';
 import { key } from '../constants';
 
 enum Animation {
-  Left = 'Left',
-  Right = 'Right',
-  Up = 'Up',
-  Down = 'Down',
+  Left = 'PlayerLeft',
+  Right = 'PlayerRight',
+  Up = 'PlayerUp',
+  Down = 'PlayerDown',
 }
 
 type Cursors = Record<

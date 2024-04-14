@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { key } from '../constants';
+import { Direction, key } from '../constants';
 
 enum Animation {
   Left = 'SpacemanLeft',
@@ -10,18 +10,9 @@ enum Animation {
   Turn = 'SpacemanTurn',
 }
 
-enum Direction {
-  Left = 'Left',
-  Right = 'Right',
-  Up = 'Up',
-  Down = 'Down',
-}
-
-const directions = Object.values(Direction);
-
 const Velocity = {
-  Horizontal: 125,
-  Vertical: 125,
+  Horizontal: 100,
+  Vertical: 100,
 } as const;
 
 export class Spaceman extends Phaser.Physics.Arcade.Sprite {
@@ -100,7 +91,7 @@ export class Spaceman extends Phaser.Physics.Arcade.Sprite {
   private getDirection() {
     const { now } = this.scene.time;
     if (now > this.nextUpdateDirectionTime) {
-      this.direction = Phaser.Utils.Array.GetRandom(directions);
+      this.direction = Phaser.Utils.Array.GetRandom(Object.values(Direction));
       this.nextUpdateDirectionTime = now + Phaser.Math.Between(500, 2500);
     }
     return this.direction;
