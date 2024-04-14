@@ -37,7 +37,7 @@ export class Main extends Phaser.Scene {
     )!;
 
     this.tilemap.createLayer(TilemapLayer.BelowPlayer, tileset);
-    const worldLayer = this.tilemap.createLayer(TilemapLayer.World, tileset)!;
+    this.worldLayer = this.tilemap.createLayer(TilemapLayer.World, tileset)!;
     const aboveLayer = this.tilemap.createLayer(
       TilemapLayer.AbovePlayer,
       tileset,
@@ -45,9 +45,9 @@ export class Main extends Phaser.Scene {
       0,
     )!;
 
-    worldLayer.setCollisionByProperty({ collides: true });
-    this.physics.world.bounds.width = worldLayer.width;
-    this.physics.world.bounds.height = worldLayer.height;
+    this.worldLayer.setCollisionByProperty({ collides: true });
+    this.physics.world.bounds.width = this.worldLayer.width;
+    this.physics.world.bounds.height = this.worldLayer.height;
 
     aboveLayer.setDepth(Depth.AbovePlayer);
 
@@ -71,7 +71,7 @@ export class Main extends Phaser.Scene {
 
     this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
     this.addPlayerSignInteraction();
-    this.physics.add.collider(this.player, worldLayer);
+    this.physics.add.collider(this.player, this.worldLayer);
 
     this.cameras.main.setBounds(
       0,
@@ -80,11 +80,11 @@ export class Main extends Phaser.Scene {
       this.tilemap.heightInPixels,
     );
 
-    render(<TilemapDebug tilemapLayer={worldLayer} />, this);
+    render(<TilemapDebug tilemapLayer={this.worldLayer} />, this);
 
-    this.tileMarker = new TileMarker(this, this.tilemap, worldLayer!);
+    this.tileMarker = new TileMarker(this, this.tilemap, this.worldLayer);
 
-    this.addSpaceman(worldLayer);
+    this.addSpaceman();
 
     state.isTypewriting = true;
     render(
@@ -101,20 +101,20 @@ export class Main extends Phaser.Scene {
     });
   }
 
-  private addSpaceman(worldLayer: Phaser.Tilemaps.TilemapLayer) {
+  private addSpaceman() {
     this.spacemanGroup = this.add.group();
 
     Array.from(Array(10).keys()).forEach(() => {
       this.spacemanGroup.add(
         new Spaceman(
           this,
-          Phaser.Math.RND.between(0, worldLayer.width - 1),
-          Phaser.Math.RND.between(0, worldLayer.height - 1),
+          Phaser.Math.RND.between(0, this.worldLayer.width - 1),
+          Phaser.Math.RND.between(0, this.worldLayer.height - 1),
         ),
       );
     });
 
-    this.physics.add.collider(this.spacemanGroup, worldLayer);
+    this.physics.add.collider(this.spacemanGroup, this.worldLayer);
     this.physics.add.collider(this.spacemanGroup, this.player);
     this.physics.add.collider(this.spacemanGroup, this.spacemanGroup);
   }
