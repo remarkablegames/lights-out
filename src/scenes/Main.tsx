@@ -11,7 +11,7 @@ import {
 } from '../constants';
 import { TileMarker } from '../graphics';
 import { Player } from '../sprites';
-import { Cat } from '../sprites';
+import { Spaceman } from '../sprites';
 import { state } from '../state';
 
 interface Sign extends Phaser.Physics.Arcade.StaticBody {
@@ -22,7 +22,7 @@ export class Main extends Phaser.Scene {
   private player!: Player;
   private sign!: Sign;
   private tileMarker!: TileMarker;
-  private catGroup!: Phaser.GameObjects.Group;
+  private spacemanGroup!: Phaser.GameObjects.Group;
 
   constructor() {
     super(key.scene.main);
@@ -75,19 +75,19 @@ export class Main extends Phaser.Scene {
 
     this.tileMarker = new TileMarker(this, map, worldLayer!);
 
-    this.catGroup = this.add.group();
+    this.spacemanGroup = this.add.group();
     Array.from(Array(10).keys()).forEach(() => {
-      this.catGroup.add(
-        new Cat(
+      this.spacemanGroup.add(
+        new Spaceman(
           this,
           Phaser.Math.RND.between(0, worldLayer.width - 1),
           Phaser.Math.RND.between(0, worldLayer.height - 1),
         ),
       );
     });
-    this.physics.add.collider(this.catGroup, worldLayer);
-    this.physics.add.collider(this.catGroup, this.player);
-    this.physics.add.collider(this.catGroup, this.catGroup);
+    this.physics.add.collider(this.spacemanGroup, worldLayer);
+    this.physics.add.collider(this.spacemanGroup, this.player);
+    this.physics.add.collider(this.spacemanGroup, this.spacemanGroup);
 
     state.isTypewriting = true;
     render(
@@ -132,6 +132,6 @@ export class Main extends Phaser.Scene {
   update() {
     this.player.update();
     this.tileMarker.update();
-    this.catGroup.getChildren().forEach((cat) => cat.update());
+    this.spacemanGroup.getChildren().forEach((spaceman) => spaceman.update());
   }
 }

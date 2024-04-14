@@ -3,11 +3,11 @@ import Phaser from 'phaser';
 import { key } from '../constants';
 
 enum Animation {
-  Left = 'CatLeft',
-  Right = 'CatRight',
-  Up = 'CatUp',
-  Down = 'CatDown',
-  Turn = 'CatTurn',
+  Left = 'SpacemanLeft',
+  Right = 'SpacemanRight',
+  Up = 'SpacemanUp',
+  Down = 'SpacemanDown',
+  Turn = 'SpacemanTurn',
 }
 
 enum Direction {
@@ -24,7 +24,7 @@ const Velocity = {
   Vertical: 125,
 } as const;
 
-export class Cat extends Phaser.Physics.Arcade.Sprite {
+export class Spaceman extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
   direction = Direction.Left;
   nextUpdateDirectionTime = 0;
