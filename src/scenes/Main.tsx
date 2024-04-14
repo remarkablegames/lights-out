@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { render } from 'phaser-jsx';
 
-import { TilemapDebug, Typewriter } from '../components';
+import { Score, TilemapDebug, Typewriter } from '../components';
 import {
   Depth,
   key,
@@ -13,12 +13,16 @@ import { TileMarker } from '../graphics';
 import { Player, Spaceman } from '../sprites';
 import { state } from '../state';
 
+type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
+
 interface Sign extends Phaser.Physics.Arcade.StaticBody {
   text?: string;
 }
 
 export class Main extends Phaser.Scene {
   private player!: Player;
+  private power = 0;
+  private score!: Phaser.GameObjects.Text;
   private sign!: Sign;
   private spacemanGroup!: Phaser.GameObjects.Group;
   private tileMarker!: TileMarker;
@@ -65,6 +69,11 @@ export class Main extends Phaser.Scene {
     this.addPlayer();
     this.addSpaceman();
 
+    render(
+      <Score text="Power: 0" ref={(score) => (this.score = score)} />,
+      this,
+    );
+
     state.isTypewriting = true;
     render(
       <Typewriter
@@ -105,9 +114,23 @@ export class Main extends Phaser.Scene {
       );
     });
 
-    this.physics.add.collider(this.spacemanGroup, this.worldLayer);
     this.physics.add.collider(this.spacemanGroup, this.player);
     this.physics.add.collider(this.spacemanGroup, this.spacemanGroup);
+    this.physics.add.collider(this.spacemanGroup, this.worldLayer);
+
+    this.physics.add.overlap(
+      this.spacemanGroup as unknown as ArcadeColliderType,
+      this.player.selector as unknown as ArcadeColliderType,
+      (spaceman) => {
+        if (this.player.cursors.space.isDown) {
+          spaceman.destroy();
+          this.power++;
+          this.score.setText(`Power: ${this.power}`);
+        }
+      },
+      undefined,
+      this,
+    );
   }
 
   private addPlayerSignInteraction() {
@@ -123,8 +146,6 @@ export class Main extends Phaser.Scene {
       sign.height,
     );
     this.sign.text = sign.properties[0].value;
-
-    type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 
     this.physics.add.overlap(
       this.sign as unknown as ArcadeColliderType,
