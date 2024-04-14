@@ -69,16 +69,18 @@ export class Main extends Phaser.Scene {
     this.addPlayer();
     this.addSpaceman();
 
-    render(
-      <Score text="Power: 0" ref={(score) => (this.score = score)} />,
-      this,
-    );
-
     state.isTypewriting = true;
     render(
       <Typewriter
         text="WASD or arrow keys to move."
-        onEnd={() => (state.isTypewriting = false)}
+        onEnd={() => {
+          state.isTypewriting = false;
+
+          render(
+            <Score text="Power: 0" ref={(score) => (this.score = score)} />,
+            this,
+          );
+        }}
       />,
       this,
     );
