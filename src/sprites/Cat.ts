@@ -3,10 +3,11 @@ import Phaser from 'phaser';
 import { key } from '../constants';
 
 enum Animation {
-  Left = 'Left',
-  Right = 'Right',
-  Up = 'Up',
-  Down = 'Down',
+  Left = 'CatLeft',
+  Right = 'CatRight',
+  Up = 'CatUp',
+  Down = 'CatDown',
+  Turn = 'CatTurn',
 }
 
 enum Direction {
@@ -19,8 +20,8 @@ enum Direction {
 const directions = Object.values(Direction);
 
 const Velocity = {
-  Horizontal: 150,
-  Vertical: 150,
+  Horizontal: 125,
+  Vertical: 125,
 } as const;
 
 export class Cat extends Phaser.Physics.Arcade.Sprite {
@@ -32,80 +33,63 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
     scene: Phaser.Scene,
     x: number,
     y: number,
-    texture = key.atlas.cat,
-    frame = 'misa-front',
+    texture = key.image.spaceman,
+    frame = 0,
   ) {
     super(scene, x, y, texture, frame);
 
     scene.add.existing(this);
     scene.physics.world.enable(this);
 
-    // The image has a bit of whitespace so use setSize and
-    // setOffset to control the size of the player's body
-    this.setSize(32, 42).setOffset(0, 22);
-
     this.setCollideWorldBounds(true);
-    this.setTint(0xff0000);
     this.createAnimations();
   }
 
   private createAnimations() {
     const anims = this.scene.anims;
 
-    // Create left animation
     if (!anims.exists(Animation.Left)) {
       anims.create({
         key: Animation.Left,
-        frames: anims.generateFrameNames(key.atlas.player, {
-          prefix: 'misa-left-walk.',
-          start: 0,
-          end: 3,
-          zeroPad: 3,
+        frames: anims.generateFrameNumbers(key.image.spaceman, {
+          start: 8,
+          end: 9,
         }),
         frameRate: 10,
         repeat: -1,
       });
     }
 
-    // Create right animation
     if (!anims.exists(Animation.Right)) {
       anims.create({
         key: Animation.Right,
-        frames: anims.generateFrameNames(key.atlas.player, {
-          prefix: 'misa-right-walk.',
-          start: 0,
-          end: 3,
-          zeroPad: 3,
+        frames: anims.generateFrameNumbers(key.image.spaceman, {
+          start: 1,
+          end: 2,
         }),
         frameRate: 10,
         repeat: -1,
       });
     }
 
-    // Create up animation
     if (!anims.exists(Animation.Up)) {
       anims.create({
         key: Animation.Up,
-        frames: anims.generateFrameNames(key.atlas.player, {
-          prefix: 'misa-back-walk.',
-          start: 0,
-          end: 3,
-          zeroPad: 3,
+        frames: anims.generateFrameNumbers(key.image.spaceman, {
+          start: 11,
+          end: 13,
         }),
         frameRate: 10,
         repeat: -1,
       });
     }
 
-    // Create down animation
     if (!anims.exists(Animation.Down)) {
       anims.create({
         key: Animation.Down,
-        frames: anims.generateFrameNames(key.atlas.player, {
-          prefix: 'misa-front-walk.',
-          start: 0,
-          end: 3,
-          zeroPad: 3,
+        frames: anims.generateFrameNumbers(key.image.spaceman, {
+          start: 4,
+          end: 6,
         }),
         frameRate: 10,
         repeat: -1,
