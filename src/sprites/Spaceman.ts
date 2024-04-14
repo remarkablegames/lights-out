@@ -33,6 +33,7 @@ export class Spaceman extends Phaser.Physics.Arcade.Sprite {
 
     this.setCollideWorldBounds(true);
     this.createAnimations();
+    this.createMovement();
   }
 
   private createAnimations() {
@@ -87,19 +88,18 @@ export class Spaceman extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private getDirection() {
-    const { now } = this.scene.time;
-    if (now > this.nextUpdateDirectionTime) {
-      this.direction = Phaser.Utils.Array.GetRandom(Object.values(Direction));
-      this.nextUpdateDirectionTime = now + Phaser.Math.Between(500, 2500);
-    }
-    return this.direction;
+  private createMovement() {
+    this.scene.time.addEvent({
+      callback: () => {
+        this.direction = Phaser.Utils.Array.GetRandom(Object.values(Direction));
+      },
+      delay: Phaser.Math.Between(500, 2500),
+      loop: true,
+    });
   }
 
   update() {
-    const { anims, body } = this;
-
-    const direction = this.getDirection();
+    const { anims, body, direction } = this;
 
     // Horizontal movement
     switch (direction) {
