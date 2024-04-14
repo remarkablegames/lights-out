@@ -25,6 +25,8 @@ const Velocity = {
 
 export class Cat extends Phaser.Physics.Arcade.Sprite {
   body!: Phaser.Physics.Arcade.Body;
+  direction = Direction.Left;
+  nextUpdateDirectionTime = 0;
 
   constructor(
     scene: Phaser.Scene,
@@ -112,59 +114,46 @@ export class Cat extends Phaser.Physics.Arcade.Sprite {
   }
 
   private getDirection() {
-    return Phaser.Utils.Array.GetRandom(directions);
+    const { now } = this.scene.time;
+    if (now > this.nextUpdateDirectionTime) {
+      this.direction = Phaser.Utils.Array.GetRandom(directions);
+      this.nextUpdateDirectionTime = now + Phaser.Math.Between(500, 2500);
+    }
+    return this.direction;
   }
 
   update() {
     const { anims, body } = this;
-    const prevVelocity = body.velocity.clone();
-
-    // Stop any previous movement from the last frame
-    body.setVelocity(0);
 
     const direction = this.getDirection();
 
     // Horizontal movement
-    switch (true) {
-      case direction === Direction.Left:
+    switch (direction) {
+      case Direction.Left:
         body.setVelocityX(-Velocity.Horizontal);
+        anims.play(Animation.Left, true);
         break;
 
-      case direction === Direction.Right:
+      case Direction.Right:
         body.setVelocityX(Velocity.Horizontal);
+        anims.play(Animation.Right, true);
         break;
     }
 
     // Vertical movement
-    switch (true) {
-      case direction === Direction.Down:
+    switch (direction) {
+      case Direction.Up:
         body.setVelocityY(-Velocity.Vertical);
+        anims.play(Animation.Up, true);
         break;
 
-      case direction === Direction.Up:
+      case Direction.Down:
         body.setVelocityY(Velocity.Vertical);
+        anims.play(Animation.Down, true);
         break;
     }
 
     // Normalize and scale the velocity so that player can't move faster along a diagonal
     body.velocity.normalize().scale(Velocity.Horizontal);
-
-    anims.stop();
-
-    // If we were moving, pick an idle frame to use
-    switch (true) {
-      case prevVelocity.x < 0:
-        this.setTexture(key.atlas.player, 'misa-left');
-        break;
-      case prevVelocity.x > 0:
-        this.setTexture(key.atlas.player, 'misa-right');
-        break;
-      case prevVelocity.y < 0:
-        this.setTexture(key.atlas.player, 'misa-back');
-        break;
-      case prevVelocity.y > 0:
-        this.setTexture(key.atlas.player, 'misa-front');
-        break;
-    }
   }
 }
