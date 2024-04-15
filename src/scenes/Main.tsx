@@ -28,6 +28,7 @@ export class Main extends Phaser.Scene {
   private tileMarker!: TileMarker;
   private tilemap!: Phaser.Tilemaps.Tilemap;
   private worldLayer!: Phaser.Tilemaps.TilemapLayer;
+  private vignette!: Phaser.FX.Vignette;
 
   constructor() {
     super(key.scene.main);
@@ -55,19 +56,14 @@ export class Main extends Phaser.Scene {
 
     aboveLayer.setDepth(Depth.AbovePlayer);
 
-    this.cameras.main.setBounds(
-      0,
-      0,
-      this.tilemap.widthInPixels,
-      this.tilemap.heightInPixels,
-    );
-
     render(<TilemapDebug tilemapLayer={this.worldLayer} />, this);
 
     this.tileMarker = new TileMarker(this, this.tilemap, this.worldLayer);
 
     this.addPlayer();
     this.addSpaceman();
+
+    this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 0.2);
 
     state.isTypewriting = true;
     render(
@@ -126,6 +122,7 @@ export class Main extends Phaser.Scene {
       (spaceman) => {
         if (this.player.cursors.space.isDown) {
           spaceman.destroy();
+          this.vignette.radius += 0.05;
           this.power++;
           this.score.setText(`Power: ${this.power}`);
         }
