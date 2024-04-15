@@ -30,6 +30,7 @@ export class Spaceman extends Phaser.Physics.Arcade.Sprite {
 
     scene.add.existing(this);
     scene.physics.world.enable(this);
+    this.postFX.addShine(1, 0.5);
 
     this.setCollideWorldBounds(true);
     this.createAnimations();
