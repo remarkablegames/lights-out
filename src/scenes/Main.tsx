@@ -122,7 +122,11 @@ export class Main extends Phaser.Scene {
       (spaceman) => {
         if (this.player.cursors.space.isDown) {
           spaceman.destroy();
-          this.vignette.radius += 0.05;
+          this.vignette.radius = Phaser.Math.Clamp(
+            this.vignette.radius + 0.05,
+            0,
+            1,
+          );
           this.power++;
           this.score.setText(`Power: ${this.power}`);
         }
