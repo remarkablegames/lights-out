@@ -46,12 +46,27 @@ export class Main extends Phaser.Scene {
 
     this.addPlayer();
     this.addSpaceman();
-
-    this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 0.2);
+    this.addVignette();
 
     this.input.keyboard!.on('keydown-ESC', () => {
       this.scene.pause(key.scene.main);
       this.scene.launch(key.scene.menu);
+    });
+  }
+
+  private addVignette() {
+    this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 1);
+    this.time.addEvent({
+      delay: 500,
+      callback: () => {
+        this.vignette.radius = Phaser.Math.Clamp(
+          this.vignette.radius - 0.01,
+          0,
+          1,
+        );
+      },
+      callbackScope: this,
+      loop: true,
     });
   }
 
@@ -68,15 +83,17 @@ export class Main extends Phaser.Scene {
   private addSpaceman() {
     this.spacemanGroup = this.add.group();
 
-    Array.from(Array(10).keys()).forEach(() => {
-      this.spacemanGroup.add(
-        new Spaceman(
-          this,
-          Phaser.Math.RND.between(0, this.worldLayer.width - 1),
-          Phaser.Math.RND.between(0, this.worldLayer.height - 1),
-        ),
-      );
-    });
+    Array(10)
+      .fill(undefined)
+      .forEach(() => {
+        this.spacemanGroup.add(
+          new Spaceman(
+            this,
+            Phaser.Math.RND.between(0, this.worldLayer.width - 1),
+            Phaser.Math.RND.between(0, this.worldLayer.height - 1),
+          ),
+        );
+      });
 
     this.physics.add.collider(this.spacemanGroup, this.player);
     this.physics.add.collider(this.spacemanGroup, this.spacemanGroup);
@@ -86,14 +103,12 @@ export class Main extends Phaser.Scene {
       this.spacemanGroup as unknown as ArcadeColliderType,
       this.player.selector as unknown as ArcadeColliderType,
       (spaceman) => {
-        if (this.player.cursors.space.isDown) {
-          spaceman.destroy();
-          this.vignette.radius = Phaser.Math.Clamp(
-            this.vignette.radius + 0.05,
-            0,
-            1,
-          );
-        }
+        spaceman.destroy();
+        this.vignette.radius = Phaser.Math.Clamp(
+          this.vignette.radius + 0.05,
+          0,
+          1,
+        );
       },
       undefined,
       this,
