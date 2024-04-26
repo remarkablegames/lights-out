@@ -1,9 +1,11 @@
+import type Phaser from 'phaser';
 import { Text } from 'phaser-jsx';
 
 import { Depth } from '../constants';
 
 interface Props {
   text: string;
+  ref?: (text: Phaser.GameObjects.Text) => void;
 }
 
 export function Score(props: Props) {
@@ -22,6 +24,7 @@ export function Score(props: Props) {
       scrollFactorX={0}
       scrollFactorY={0}
       depth={Depth.AboveWorld}
+      ref={props.ref}
     />
   );
 }

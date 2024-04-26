@@ -61,7 +61,8 @@ export class Main extends Phaser.Scene {
 
     render(
       <Score
-        text={`Collect ${this.level.powerups} Powerup${this.level.powerups > 1 ? 's' : ''}`}
+        text={`Powerups: ${this.powerups}/${this.level.powerups}`}
+        ref={(score) => (this.score = score)}
       />,
       this,
     );
@@ -95,8 +96,8 @@ export class Main extends Phaser.Scene {
   private addPlayer() {
     this.player = new Player(
       this,
-      Phaser.Math.RND.between(0, this.worldLayer.width - 1),
-      Phaser.Math.RND.between(0, this.worldLayer.height - 1),
+      Phaser.Math.RND.between(0, this.worldLayer.width - 280),
+      Phaser.Math.RND.between(0, this.worldLayer.height),
     );
     this.physics.add.collider(this.player, this.worldLayer);
   }
@@ -126,9 +127,12 @@ export class Main extends Phaser.Scene {
       (spaceman) => {
         spaceman.destroy();
         this.powerups++;
+        this.score.setText(`Powerups: ${this.powerups}/${this.level.powerups}`);
+
         if (this.powerups >= this.level.powerups) {
           this.scene.restart({ level: this.level.level + 1 });
         }
+
         this.vignette.radius = Phaser.Math.Clamp(
           this.vignette.radius + 0.05,
           0,
