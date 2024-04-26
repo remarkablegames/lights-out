@@ -1,5 +1,7 @@
 import Phaser from 'phaser';
+import { render } from 'phaser-jsx';
 
+import { Score } from '../components';
 import {
   Depth,
   key,
@@ -13,10 +15,12 @@ type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 
 export class Main extends Phaser.Scene {
   private player!: Player;
+  private powerups = 1;
+  private score!: Phaser.GameObjects.Text;
   private spacemanGroup!: Phaser.GameObjects.Group;
   private tilemap!: Phaser.Tilemaps.Tilemap;
-  private worldLayer!: Phaser.Tilemaps.TilemapLayer;
   private vignette!: Phaser.FX.Vignette;
+  private worldLayer!: Phaser.Tilemaps.TilemapLayer;
 
   constructor() {
     super(key.scene.main);
@@ -47,6 +51,13 @@ export class Main extends Phaser.Scene {
     this.addPlayer();
     this.addSpaceman();
     this.addVignette();
+
+    render(
+      <Score
+        text={`Collect ${this.powerups} Powerup${this.powerups > 1 ? 's' : ''}`}
+      />,
+      this,
+    );
 
     this.input.keyboard!.on('keydown-ESC', () => {
       this.scene.pause(key.scene.main);
