@@ -1,4 +1,11 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/remarkablegames/lights-out/master/public/screenshots/screenshot3.png" alt="Lights Out" width="360">
+</p>
+
 # Lights Out
+
+![release](https://img.shields.io/github/v/release/remarkablegames/lights-out)
+[![build](https://github.com/remarkablegames/lights-out/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/lights-out/actions/workflows/build.yml)
 
 💡 Lights Out is a 2D arcade game.
 
