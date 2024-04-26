@@ -2,10 +2,13 @@
 <html lang="en-US">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="favicon.ico" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta name="description" content="Lights Out is a 2D arcade game." />
+    <meta name="description" content="💡 Lights Out is a 2D arcade game." />
     <link rel="apple-touch-icon" href="logo192.png" />
 
     <!--
@@ -16,10 +19,10 @@
 
     <link rel="stylesheet" href="src/style.css" />
 
+    <% if (process.env.BUNDLE !== 'true') { %>
     <!--
       GitHub Corners. See https://github.com/remarkablemark/github-corners
     -->
-    <% if (process.env.BUNDLE !== 'true') { %>
     <script
       src="https://unpkg.com/github-corners/dist/embed.min.js"
       data-href="https://github.com/remarkablegames/lights-out"
