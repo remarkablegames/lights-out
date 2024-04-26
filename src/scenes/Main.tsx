@@ -9,13 +9,14 @@ import {
   TilemapObject,
   TILESET_NAME,
 } from '../constants';
+import { type Level, levels } from '../levels';
 import { Player, Spaceman } from '../sprites';
 
 type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 
 export class Main extends Phaser.Scene {
+  private level!: Level;
   private player!: Player;
-  private powerups = 1;
   private score!: Phaser.GameObjects.Text;
   private spacemanGroup!: Phaser.GameObjects.Group;
   private tilemap!: Phaser.Tilemaps.Tilemap;
@@ -24,6 +25,13 @@ export class Main extends Phaser.Scene {
 
   constructor() {
     super(key.scene.main);
+  }
+
+  init(data: { level: number }) {
+    const level = levels[data.level];
+    if (level) {
+      this.level = level;
+    }
   }
 
   create() {
@@ -54,7 +62,7 @@ export class Main extends Phaser.Scene {
 
     render(
       <Score
-        text={`Collect ${this.powerups} Powerup${this.powerups > 1 ? 's' : ''}`}
+        text={`Collect ${this.level.powerups} Powerup${this.level.powerups > 1 ? 's' : ''}`}
       />,
       this,
     );
@@ -68,10 +76,10 @@ export class Main extends Phaser.Scene {
   private addVignette() {
     this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 1);
     this.time.addEvent({
-      delay: 500,
+      delay: this.level.delay,
       callback: () => {
         this.vignette.radius = Phaser.Math.Clamp(
-          this.vignette.radius - 0.01,
+          this.vignette.radius - this.level.radius,
           0,
           1,
         );
@@ -94,7 +102,7 @@ export class Main extends Phaser.Scene {
   private addSpaceman() {
     this.spacemanGroup = this.add.group();
 
-    Array(10)
+    Array(this.level.spacemen)
       .fill(undefined)
       .forEach(() => {
         this.spacemanGroup.add(

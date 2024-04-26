@@ -29,6 +29,6 @@ export class Boot extends Scene {
   }
 
   create() {
-    this.scene.start(key.scene.main);
+    this.scene.start(key.scene.main, { level: 0 });
   }
 }
