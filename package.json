@@ -1,7 +1,7 @@
 {
   "name": "lights-out",
   "version": "1.0.0",
-  "description": "Lights Out is a game where you collect the power-ups.",
+  "description": "Lights Out is a game where you collect power-ups.",
   "author": "Mark <mark@remarkablemark.org>",
   "scripts": {
     "build": "npm run clean && vite build",
