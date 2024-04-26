@@ -7,7 +7,7 @@
 ![release](https://img.shields.io/github/v/release/remarkablegames/lights-out)
 [![build](https://github.com/remarkablegames/lights-out/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/lights-out/actions/workflows/build.yml)
 
-💡 Lights Out is a 2D arcade game.
+💡 Lights Out is a game where you collect the power-ups.
 
 This game was made for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024), in which the theme was `power`.
 
