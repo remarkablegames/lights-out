@@ -1,11 +1,12 @@
 export interface Level {
+  level: number;
   powerups: number;
   spacemen: number;
   delay: number;
   radius: number;
 }
 
-export const levels: Level[] = [
+const levels: Omit<Level, 'level'>[] = [
   // 0
   {
     powerups: 1,
@@ -14,3 +15,13 @@ export const levels: Level[] = [
     radius: 0.01,
   },
 ];
+
+export function getLevel(currentLevel: number) {
+  const level = levels[currentLevel];
+  if (level) {
+    return {
+      ...level,
+      level: currentLevel,
+    };
+  }
+}

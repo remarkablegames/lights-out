@@ -11,6 +11,7 @@ const scene = {
   boot: 'boot',
   main: 'main',
   menu: 'menu',
+  win: 'win',
 } as const;
 
 const tilemap = {

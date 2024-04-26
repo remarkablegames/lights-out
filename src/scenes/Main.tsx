@@ -9,7 +9,7 @@ import {
   TilemapObject,
   TILESET_NAME,
 } from '../constants';
-import { type Level, levels } from '../levels';
+import { getLevel, type Level } from '../levels';
 import { Player, Spaceman } from '../sprites';
 
 type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
@@ -28,9 +28,11 @@ export class Main extends Phaser.Scene {
   }
 
   init(data: { level: number }) {
-    const level = levels[data.level];
+    const level = getLevel(data.level);
     if (level) {
       this.level = level;
+    } else {
+      this.scene.start(key.scene.win);
     }
   }
 
@@ -123,6 +125,10 @@ export class Main extends Phaser.Scene {
       this.player.selector as unknown as ArcadeColliderType,
       (spaceman) => {
         spaceman.destroy();
+        this.level.powerups--;
+        if (this.level.powerups === 0) {
+          this.scene.restart({ level: this.level.level + 1 });
+        }
         this.vignette.radius = Phaser.Math.Clamp(
           this.vignette.radius + 0.05,
           0,
