@@ -57,7 +57,7 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
     this.createAnimations();
 
     // Add selector
-    this.selector = scene.physics.add.staticBody(x - 8, y + 32, 16, 16);
+    this.selector = scene.physics.add.staticBody(x - 16, y + 32, 32, 16);
   }
 
   /**
@@ -138,23 +138,31 @@ export class Player extends Phaser.Physics.Arcade.Sprite {
 
     switch (animation) {
       case Animation.Left:
-        selector.x = body.x - 19;
-        selector.y = body.y + 14;
+        selector.width = 16;
+        selector.height = 42;
+        selector.x = body.x - 16;
+        selector.y = body.y;
         break;
 
       case Animation.Right:
-        selector.x = body.x + 35;
-        selector.y = body.y + 14;
+        selector.width = 16;
+        selector.height = 42;
+        selector.x = body.x + 32;
+        selector.y = body.y;
         break;
 
       case Animation.Up:
-        selector.x = body.x + 8;
-        selector.y = body.y - 18;
+        selector.width = 32;
+        selector.height = 16;
+        selector.x = body.x;
+        selector.y = body.y - 16;
         break;
 
       case Animation.Down:
-        selector.x = body.x + 8;
-        selector.y = body.y + 46;
+        selector.width = 32;
+        selector.height = 16;
+        selector.x = body.x;
+        selector.y = body.y + 42;
         break;
     }
   }
