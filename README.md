@@ -1,12 +1,12 @@
-# Animal Power Tycoon
+# Lights Out
 
-🐹 Animal Power Tycoon is a 2D simulator game.
+💡 Lights Out is a 2D arcade game.
 
-This game was made for the [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024), in which the theme was `power`.
+This game was made for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024), in which the theme was `power`.
 
 Play the game on:
 
-- [remarkablegames](https://remarkablegames.org/animal-power-tycoon)
+- [remarkablegames](https://remarkablegames.org/lights-out)
 
 ## Ideation
 
@@ -21,8 +21,8 @@ Play the game on:
 Clone the repository:
 
 ```sh
-git clone https://github.com/remarkablegames/animal-power-tycoon.git
-cd animal-power-tycoon
+git clone https://github.com/remarkablegames/lights-out.git
+cd lights-out
 ```
 
 Install the dependencies:

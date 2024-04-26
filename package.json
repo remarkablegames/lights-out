@@ -1,7 +1,7 @@
 {
-  "name": "animal-power-tycoon",
+  "name": "lights-out",
   "version": "1.0.0-alpha",
-  "description": "A template for building Animal Power Tycoon games.",
+  "description": "Lights Out is a 2D arcade game.",
   "author": "Mark <mark@remarkablemark.org>",
   "scripts": {
     "build": "npm run clean && vite build",
@@ -14,7 +14,7 @@
     "preview": "vite preview",
     "start": "vite --open"
   },
-  "homepage": "https://remarkablegames.org/animal-power-tycoon/",
+  "homepage": "https://remarkablegames.org/lights-out/",
   "dependencies": {
     "phaser": "3.80.1",
     "phaser-jsx": "0.10.0"

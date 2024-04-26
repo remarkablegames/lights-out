@@ -8,7 +8,7 @@ import * as scenes from './scenes';
 new Phaser.Game({
   width: 800, // 1024
   height: 600, // 768
-  title: 'Animal Power Tycoon',
+  title: 'Lights Out',
   url: import.meta.env.VITE_APP_HOMEPAGE,
   version: import.meta.env.VITE_APP_VERSION,
   scene: [
