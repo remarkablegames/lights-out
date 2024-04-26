@@ -9,6 +9,7 @@ const image = {
 
 const scene = {
   boot: 'boot',
+  lose: 'lose',
   main: 'main',
   menu: 'menu',
   win: 'win',

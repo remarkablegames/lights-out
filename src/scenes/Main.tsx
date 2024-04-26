@@ -85,6 +85,10 @@ export class Main extends Phaser.Scene {
           0,
           1,
         );
+
+        if (this.vignette.radius === 0) {
+          this.scene.start(key.scene.lose);
+        }
       },
       callbackScope: this,
       loop: true,
