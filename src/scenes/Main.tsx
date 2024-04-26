@@ -2,13 +2,7 @@ import Phaser from 'phaser';
 import { render } from 'phaser-jsx';
 
 import { Score } from '../components';
-import {
-  Depth,
-  key,
-  TilemapLayer,
-  TilemapObject,
-  TILESET_NAME,
-} from '../constants';
+import { Depth, key, TilemapLayer, TILESET_NAME } from '../constants';
 import { getLevel, type Level } from '../levels';
 import { Player, Spaceman } from '../sprites';
 
@@ -17,6 +11,7 @@ type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 export class Main extends Phaser.Scene {
   private level!: Level;
   private player!: Player;
+  private powerups = 0;
   private score!: Phaser.GameObjects.Text;
   private spacemanGroup!: Phaser.GameObjects.Group;
   private tilemap!: Phaser.Tilemaps.Tilemap;
@@ -28,7 +23,9 @@ export class Main extends Phaser.Scene {
   }
 
   init(data: { level: number }) {
+    this.powerups = 0;
     const level = getLevel(data.level);
+
     if (level) {
       this.level = level;
     } else {
@@ -96,12 +93,11 @@ export class Main extends Phaser.Scene {
   }
 
   private addPlayer() {
-    const spawnPoint = this.tilemap.findObject(
-      TilemapLayer.Objects,
-      ({ name }) => name === TilemapObject.SpawnPoint,
-    )!;
-
-    this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
+    this.player = new Player(
+      this,
+      Phaser.Math.RND.between(0, this.worldLayer.width - 1),
+      Phaser.Math.RND.between(0, this.worldLayer.height - 1),
+    );
     this.physics.add.collider(this.player, this.worldLayer);
   }
 
@@ -129,8 +125,8 @@ export class Main extends Phaser.Scene {
       this.player.selector as unknown as ArcadeColliderType,
       (spaceman) => {
         spaceman.destroy();
-        this.level.powerups--;
-        if (this.level.powerups === 0) {
+        this.powerups++;
+        if (this.powerups >= this.level.powerups) {
           this.scene.restart({ level: this.level.level + 1 });
         }
         this.vignette.radius = Phaser.Math.Clamp(
