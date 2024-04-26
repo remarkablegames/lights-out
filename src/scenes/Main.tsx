@@ -1,7 +1,5 @@
 import Phaser from 'phaser';
-import { render } from 'phaser-jsx';
 
-import { Score, TilemapDebug, Typewriter } from '../components';
 import {
   Depth,
   key,
@@ -9,23 +7,13 @@ import {
   TilemapObject,
   TILESET_NAME,
 } from '../constants';
-import { TileMarker } from '../graphics';
 import { Player, Spaceman } from '../sprites';
-import { state } from '../state';
 
 type ArcadeColliderType = Phaser.Types.Physics.Arcade.ArcadeColliderType;
 
-interface Sign extends Phaser.Physics.Arcade.StaticBody {
-  text?: string;
-}
-
 export class Main extends Phaser.Scene {
   private player!: Player;
-  private power = 0;
-  private score!: Phaser.GameObjects.Text;
-  private sign!: Sign;
   private spacemanGroup!: Phaser.GameObjects.Group;
-  private tileMarker!: TileMarker;
   private tilemap!: Phaser.Tilemaps.Tilemap;
   private worldLayer!: Phaser.Tilemaps.TilemapLayer;
   private vignette!: Phaser.FX.Vignette;
@@ -56,30 +44,10 @@ export class Main extends Phaser.Scene {
 
     aboveLayer.setDepth(Depth.AbovePlayer);
 
-    render(<TilemapDebug tilemapLayer={this.worldLayer} />, this);
-
-    this.tileMarker = new TileMarker(this, this.tilemap, this.worldLayer);
-
     this.addPlayer();
     this.addSpaceman();
 
     this.vignette = this.cameras.main.postFX.addVignette(0.5, 0.5, 0.2);
-
-    state.isTypewriting = true;
-    render(
-      <Typewriter
-        text="WASD or arrow keys to move."
-        onEnd={() => {
-          state.isTypewriting = false;
-
-          render(
-            <Score text="Power: 0" ref={(score) => (this.score = score)} />,
-            this,
-          );
-        }}
-      />,
-      this,
-    );
 
     this.input.keyboard!.on('keydown-ESC', () => {
       this.scene.pause(key.scene.main);
@@ -95,8 +63,6 @@ export class Main extends Phaser.Scene {
 
     this.player = new Player(this, spawnPoint.x!, spawnPoint.y!);
     this.physics.add.collider(this.player, this.worldLayer);
-
-    this.addPlayerSignInteraction();
   }
 
   private addSpaceman() {
@@ -127,43 +93,6 @@ export class Main extends Phaser.Scene {
             0,
             1,
           );
-          this.power++;
-          this.score.setText(`Power: ${this.power}`);
-        }
-      },
-      undefined,
-      this,
-    );
-  }
-
-  private addPlayerSignInteraction() {
-    const sign = this.tilemap.findObject(
-      TilemapLayer.Objects,
-      ({ name }) => name === TilemapObject.Sign,
-    )!;
-
-    this.sign = this.physics.add.staticBody(
-      sign.x!,
-      sign.y!,
-      sign.width,
-      sign.height,
-    );
-    this.sign.text = sign.properties[0].value;
-
-    this.physics.add.overlap(
-      this.sign as unknown as ArcadeColliderType,
-      this.player.selector as unknown as ArcadeColliderType,
-      (sign) => {
-        if (this.player.cursors.space.isDown && !state.isTypewriting) {
-          state.isTypewriting = true;
-
-          render(
-            <Typewriter
-              text={(sign as unknown as Sign).text!}
-              onEnd={() => (state.isTypewriting = false)}
-            />,
-            this,
-          );
         }
       },
       undefined,
@@ -173,7 +102,6 @@ export class Main extends Phaser.Scene {
 
   update() {
     this.player.update();
-    this.tileMarker.update();
     this.spacemanGroup.getChildren().forEach((spaceman) => spaceman.update());
   }
 }
