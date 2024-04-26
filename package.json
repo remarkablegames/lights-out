@@ -1,6 +1,6 @@
 {
   "name": "lights-out",
-  "version": "1.0.0-alpha",
+  "version": "1.0.0",
   "description": "Lights Out is a 2D arcade game.",
   "author": "Mark <mark@remarkablemark.org>",
   "scripts": {
