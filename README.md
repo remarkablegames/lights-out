@@ -18,7 +18,7 @@ Play the game on:
 
 ## Ideation
 
-- [Excalidraw](https://excalidraw.com/#json=ATrraBVgqlk5WyFF-Ns1F,ii5EYJOkroWOEIlHMIdsFw)
+- [Excalidraw](https://excalidraw.com/#json=kdRfqSm9UoL0cEQ8MPRNo,mMrxHx-OPwRogYySd-1PqQ)
 
 ## Prerequisites
 
