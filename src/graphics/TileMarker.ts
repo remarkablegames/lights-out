@@ -43,6 +43,7 @@ export class TileMarker extends Phaser.GameObjects.Graphics {
         this.worldLayer
           .putTileAtWorldXY(TilemapTile.Rock, worldPoint.x, worldPoint.y)
           .setCollision(true);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (error) {
         // don't draw tile if outside of game world
       }
