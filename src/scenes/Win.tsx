@@ -29,12 +29,11 @@ export class Win extends Scene {
         <Button
           center
           fixed
+          onClick={() => this.scene.start(key.scene.main, { level: 0 })}
+          text="Restart"
           x={centerX}
           y={centerY + 100}
-          onClick={() => this.scene.start(key.scene.main, { level: 0 })}
-        >
-          Restart
-        </Button>
+        />
       </>,
       this,
     );
