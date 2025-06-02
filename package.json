@@ -1,6 +1,6 @@
 {
   "name": "lights-out",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lights Out is a game where you collect power-ups.",
   "author": "Mark <mark@remarkablemark.org>",
   "scripts": {
