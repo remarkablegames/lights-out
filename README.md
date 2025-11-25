@@ -4,7 +4,7 @@
 
 # Lights Out
 
-![release](https://img.shields.io/github/v/release/remarkablegames/lights-out)
+[![release](https://img.shields.io/github/v/release/remarkablegames/lights-out)](https://github.com/remarkablegames/lights-out/releases)
 [![build](https://github.com/remarkablegames/lights-out/actions/workflows/build.yml/badge.svg)](https://github.com/remarkablegames/lights-out/actions/workflows/build.yml)
 
 💡 Collect power-ups before the lights go out!
@@ -13,8 +13,8 @@ This game was made for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024)
 
 Play the game on:
 
-- [remarkablegames](https://remarkablegames.org/lights-out)
 - [itch.io](https://remarkablegames.itch.io/lights-out)
+- [remarkablegames](https://remarkablegames.org/lights-out)
 
 Read the [blog post](https://remarkablegames.org/posts/lights-out/).
 
