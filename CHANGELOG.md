@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.1 (2026-07-24)
+
+
+### Miscellaneous Chores
+
+* release 1.0.1 ([e13af48](https://github.com/remarkablegames/lights-out/commit/e13af482229427e2da3beb184f693e7ab694e713))
+
 ## [1.0.1](https://github.com/remarkablegames/lights-out/compare/v1.0.0...v1.0.1) (2025-06-02)
 
 ### Miscellaneous Chores
